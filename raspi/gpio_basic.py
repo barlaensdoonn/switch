@@ -27,13 +27,18 @@ def initialize_logger():
 if __name__ == '__main__':
     initialize_logger()
 
-    switch = 7  # gpio pin controlling relay
-    pi = gpio_util.initialize_pigpiod(switch)
-    time.sleep(1)
+    try:
+        switch = 7  # gpio pin controlling relay
+        pi = gpio_util.initialize_pigpiod(switch)
+        time.sleep(1)
 
-    logging.debug('writing pin 7 high')
-    pi.write(7, 1)
-    time.sleep(3)
+        logging.debug('writing pin 7 high')
+        pi.write(7, 1)
+        time.sleep(3)
 
-    logging.debug('writing pin 7 low')
-    pi.write(7, 0)
+        logging.debug('writing pin 7 low')
+        pi.write(7, 0)
+    except Exception as e:
+        logging.exception('exception encountered, printing traceback:')
+    except KeyboardInterrupt:
+        logging.info('...user exit received...')
