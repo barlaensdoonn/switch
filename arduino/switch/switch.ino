@@ -6,12 +6,13 @@
 // ground connected to PST - input
 
 int relay = 7;  // pin used to communicate with relay
-int delayTime = 1000;  // time to wait between switches
+int delayTime = 3000;  // time to wait between switches
 
 
 void setup() {
   Serial.begin(9600);
-  pinMode(relay, OUTPUT);  
+  pinMode(relay, OUTPUT);
+  digitalWrite(relay, LOW);
   Serial.println("Setup has ended, entering loop()");
 }
 
