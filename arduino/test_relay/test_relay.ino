@@ -1,4 +1,4 @@
-// use light switch as trigger for relay
+// utility code to test relay
 // 10/22/17
 
 // using Power Switch Tail (PST) as relay http://www.powerswitchtail.com/
