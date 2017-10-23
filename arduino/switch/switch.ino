@@ -1,6 +1,9 @@
 // use light switch as trigger for relay
 // 10/22/17
 
+// top of light switch connected to pin 2
+// bottom connected to arduino ground
+
 // using Power Switch Tail (PST) as relay http://www.powerswitchtail.com/
 // pin 7 connected to PST + input
 // ground connected to PST - input
