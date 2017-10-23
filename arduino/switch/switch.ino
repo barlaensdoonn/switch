@@ -5,24 +5,39 @@
 // pin 7 connected to PST + input
 // ground connected to PST - input
 
-int relay = 7;  // pin used to communicate with relay
-int delayTime = 3000;  // time to wait between switches
+const int relay = 7;  // pin used to communicate with relay
+const int lightSwitch = 2;  // input pin from light switch
+const long pause = 50;  // ms to wait between readings [50ms will be about 20x/second]
+
+int input;  // hold reading from lightSwitch pin
+unsigned long timer;
 
 
 void setup() {
   Serial.begin(9600);
   pinMode(relay, OUTPUT);
+  pinMode(lightSwitch, INPUT_PULLUP);
+
+  Serial.println("initializing relay as off");
   digitalWrite(relay, LOW);
-  Serial.println("Setup has ended, entering loop()");
+
+  timer = millis() + 1000;  // pause to prevent flickering
+  Serial.println("setup has ended, entering loop()");
 }
 
 void loop() {
-  digitalWrite(relay, HIGH);
-  Serial.println("wrote relay pin HIGH");
-  delay(delayTime);
+  if (millis() > timer) {
+    timer += pause;
+    input = digitalRead(lightSwitch);
+    Serial.print("input: ");
+    Serial.println(input);
 
-  digitalWrite(relay, LOW);
-  Serial.println("wrote relay pin LOW");
-  delay(delayTime);
+    if (input == 1) {
+      digitalWrite(relay, LOW);
+    }
+    else {
+      digitalWrite(relay, HIGH);
+    }
+  }
 }
 
