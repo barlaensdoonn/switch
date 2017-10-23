@@ -33,9 +33,11 @@ void loop() {
     Serial.println(input);
 
     if (input == 1) {
+      Serial.println("writing relay LOW");
       digitalWrite(relay, LOW);
     }
     else {
+      Serial.println("writing relay HIGH");
       digitalWrite(relay, HIGH);
     }
   }
