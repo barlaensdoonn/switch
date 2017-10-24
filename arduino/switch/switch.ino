@@ -28,10 +28,16 @@ void setup() {
   Serial.println("setup has ended, entering loop()");
 }
 
+int checkSwitch() {
+  int reading;
+  reading = digitalRead(lightSwitch);
+  return reading;
+}
+
 void loop() {
   if (millis() > timer) {
     timer += pause;
-    input = digitalRead(lightSwitch);
+    input = checkSwitch();
     Serial.print("input: ");
     Serial.println(input);
 
