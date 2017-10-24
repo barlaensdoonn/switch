@@ -1,5 +1,6 @@
 // use light switch as trigger for relay
 // 10/22/17
+// updated 10/23/17
 
 // top of light switch connected to pin 2
 // bottom connected to arduino ground
@@ -13,20 +14,9 @@ const int lightSwitch = 2;  // input pin from light switch
 const long pause = 50;  // ms to wait between readings [50ms will be about 20x/second]
 
 int input;  // hold reading from lightSwitch pin
-unsigned long timer;
-
-
-void setup() {
-  Serial.begin(9600);
-  pinMode(relay, OUTPUT);
-  pinMode(lightSwitch, INPUT_PULLUP);
-
-  Serial.println("initializing relay as off");
-  digitalWrite(relay, LOW);
-
-  timer = millis() + 1000;  // pause to prevent flickering
-  Serial.println("setup has ended, entering loop()");
-}
+int prevInput;  // hold previous reading from lightSwitch pin
+unsigned long timer;  // use a timer instead of delay()
+bool state;  // track state of relay
 
 int checkSwitch() {
   int reading;
@@ -34,20 +24,32 @@ int checkSwitch() {
   return reading;
 }
 
+void setup() {
+  pinMode(relay, OUTPUT);
+  pinMode(lightSwitch, INPUT_PULLUP);
+  input = checkSwitch();
+
+  if (input == 1) {
+    state = false;
+  }
+  else {
+    state = true;
+  }
+
+  digitalWrite(relay, state);
+  prevInput = input;
+  timer = millis() + pause;
+}
+
 void loop() {
   if (millis() > timer) {
     timer += pause;
     input = checkSwitch();
-    Serial.print("input: ");
-    Serial.println(input);
 
-    if (input == 1) {
-      Serial.println("writing relay LOW");
-      digitalWrite(relay, LOW);
-    }
-    else {
-      Serial.println("writing relay HIGH");
-      digitalWrite(relay, HIGH);
+    if (input != prevInput) {
+      state = !state;
+      digitalWrite(relay, state);
+      prevInput = input;
     }
   }
 }
