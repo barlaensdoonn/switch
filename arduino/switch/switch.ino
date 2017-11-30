@@ -25,18 +25,25 @@ int checkSwitch() {
 }
 
 void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+ 
   pinMode(relay, OUTPUT);
   pinMode(lightSwitch, INPUT_PULLUP);
   input = checkSwitch();
 
   if (input == 1) {
     state = false;
+    Serial.println('0');
   }
   else {
     state = true;
+    Serial.println('1');
   }
 
   digitalWrite(relay, state);
+  Serial.println('1');
+
   prevInput = input;
   timer = millis() + pause;
 }
@@ -49,6 +56,14 @@ void loop() {
     if (input != prevInput) {
       state = !state;
       digitalWrite(relay, state);
+
+      if (state == true) {
+        Serial.println('1');
+      }
+      else {
+        Serial.println('0');
+      }
+
       prevInput = input;
     }
   }
