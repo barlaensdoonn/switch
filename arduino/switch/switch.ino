@@ -1,6 +1,6 @@
 // use light switch as trigger for relay
 // 10/22/17
-// updated 10/23/17
+// updated 12/02/17
 
 // top of light switch connected to pin 2
 // bottom connected to arduino ground
@@ -42,8 +42,6 @@ void setup() {
   }
 
   digitalWrite(relay, state);
-  Serial.println('1');
-
   prevInput = input;
   timer = millis() + pause;
 }
