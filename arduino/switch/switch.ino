@@ -16,7 +16,6 @@ const long pause = 50;  // ms to wait between readings [50ms will be about 20x/s
 int input;  // hold reading from lightSwitch pin
 int prevInput;  // hold previous reading from lightSwitch pin
 unsigned long timer;  // use a timer instead of delay()
-bool state;  // track state of relay
 
 int checkSwitch() {
   int reading;
@@ -24,15 +23,10 @@ int checkSwitch() {
   return reading;
 }
 
-void setup() {
-  Serial.begin(9600);
-  while (!Serial);
- 
-  pinMode(relay, OUTPUT);
-  pinMode(lightSwitch, INPUT_PULLUP);
-  input = checkSwitch();
+void setState(int in) {
+  bool state;  // track state of relay
 
-  if (input == 1) {
+  if (in == 1) {
     state = false;
     Serial.println('0');
   }
@@ -42,6 +36,18 @@ void setup() {
   }
 
   digitalWrite(relay, state);
+}
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+ 
+  pinMode(relay, OUTPUT);
+  pinMode(lightSwitch, INPUT_PULLUP);
+
+  input = checkSwitch();
+  setState(input);
+
   prevInput = input;
   timer = millis() + pause;
 }
@@ -52,16 +58,7 @@ void loop() {
     input = checkSwitch();
 
     if (input != prevInput) {
-      state = !state;
-      digitalWrite(relay, state);
-
-      if (state == true) {
-        Serial.println('1');
-      }
-      else {
-        Serial.println('0');
-      }
-
+      setState(input);
       prevInput = input;
     }
   }
