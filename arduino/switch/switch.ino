@@ -1,6 +1,6 @@
 // use light switch as trigger for relay
 // 10/22/17
-// updated 12/02/17
+// updated 1/1/18
 
 // top of light switch connected to pin 2
 // bottom connected to arduino ground
@@ -9,7 +9,7 @@
 // pin 7 connected to PST + input
 // ground connected to PST - input
 
-const int relay = 7;  // pin used to communicate with relay
+const int relay = 3;  // pin used to communicate with relay
 const int lightSwitch = 2;  // input pin from light switch
 const long pause = 50;  // ms to wait between readings [50ms will be about 20x/second]
 
