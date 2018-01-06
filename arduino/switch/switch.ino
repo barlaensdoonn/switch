@@ -1,6 +1,6 @@
 // use light switch as trigger for relay
 // 10/22/17
-// updated 1/1/18
+// updated 1/5/18
 
 // top of light switch connected to pin 2
 // bottom connected to arduino ground
@@ -26,7 +26,7 @@ int checkSwitch() {
 void setState(int in) {
   bool state;  // track state of relay
 
-  if (in == 1) {
+  if (in == 0) {
     state = false;
     Serial.println('0');
   }
